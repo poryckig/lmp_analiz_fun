@@ -23,19 +23,19 @@ char *get_from_fun_stack(void){
 }
 
 
-void add_zapamietane_funkcje(char *funame){
-    if(list_fun == NULL){
-        list_fun->nazwa = malloc((strlen(funame) + 1) * sizeof(*list_fun->nazwa));
-        strcpy(list_fun->nazwa, funame);
-        list_fun->next = NULL;
-	ile_funkcji++;
-    {
-    if(list_fun != NULL){
-        list_fun->next->nazwa = malloc((strlen(funame) + 1) * sizeof(*list_fun->next->nazwa));
-        strcpy(list_fun->next->nazwa, funame);
-        list_fun = list_fun->next;
-        list_fun->next = NULL;
-	ile_funkcji++;
+void add_zapamietane_funkcje(char *funame, list_zapamietane_funkcje lista){
+    if(lista == NULL){
+        lista->nazwa = malloc((strlen(funame) + 1) * sizeof(*lista->nazwa));
+        strcpy(lista->nazwa, funame);
+        lista->next = NULL;
+	    ile_funkcji++;
+    }
+    if(lista != NULL){
+        lista->next->nazwa = malloc((strlen(funame) + 1) * sizeof(*lista->next->nazwa));
+        strcpy(lista->next->nazwa, funame);
+        lista = lista->next;
+        lista->next = NULL;
+	    ile_funkcji++;
     }
 }
 

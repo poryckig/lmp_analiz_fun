@@ -30,7 +30,7 @@ int main(int argc, char **argv){
         ile_fun_proto = 0;
         ile_fun_call = 0;
         
-        analizatorSkladni(argv[i]); //wywolujemy analizatorSkladni dla kazdego pliku zrodl.
+        analizatorSkladni(argv[i], list_fun, list_fun_def, list_fun_proto, list_fun_call); //wywolujemy analizatorSkladni dla kazdego pliku zrodl.
         idz_pocz_listy(list_fun);       //<-- lista odnosi sie teraz do pierwszej struktury
         idz_pocz_listy_def(list_fun_def);
         idz_pocz_listy_proto(list_fun_proto);

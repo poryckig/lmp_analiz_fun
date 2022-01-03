@@ -16,7 +16,7 @@ int ile_funkcji;
 int ile_fun_def;
 int ile_fun_proto;
 int ile_fun_call;
-void add_zapamietane_funkcje(char *funame);
+void add_zapamietane_funkcje(char *funame, list_zapamietane_funkcje lista);
 void idz_pocz_listy(list_zapamietane_funkcje lista);
 
 #endif

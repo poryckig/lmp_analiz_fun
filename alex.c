@@ -55,7 +55,7 @@ lexem_t alex_nextLexem( void ) {
     */
 
 
-        }       //***KOMENTARZE***//
+               //***KOMENTARZE***//
         else if( c == '/' ) {    //sprawdzamy komentarze
             if( (c = fgetc(in)) == '/') {       //komentarz jednolinijkowy
                 while((c = fgetc(in)) != '\n')
@@ -110,7 +110,7 @@ lexem_t alex_nextLexem( void ) {
                 //***KONIEC LICZB***//
         else 
             return OTHER;
-        }       
+    }       
     return EOFILE;
 }
 

@@ -23,9 +23,9 @@ typedef struct e4 {
 } *lista_fun_call;
 
 
-void store_add_def(char *funame, int par_level);
-void store_add_proto(char *funame, int par_level);
-void store_add_call(char *funame, int par_level);
+void store_add_def(char *funame, int par_level, lista_fun_def lista2);
+void store_add_proto(char *funame, int par_level, lista_fun_proto lista3);
+void store_add_call(char *funame, int par_level, lista_fun_call lista4);
 int ile_fun_def, ile_fun_proto, ile_fun_call;
 
 void idz_pocz_listy_def(lista_fun_def lista);
