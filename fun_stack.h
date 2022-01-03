@@ -6,16 +6,16 @@ void put_on_fun_stack( int par_level, char *funame ); // odkłada na stos parę 
 char *get_from_fun_stack( void ); // usuwa z wierzchołka parę (funame,par_level), zwraca zdjętą funame
 
 
-typedef struct e {
+typedef struct e1 {
     char *nazwa;
-    struct e *prev;
-    struct e *next;
+    struct e1 *prev;
+    struct e1 *next;
 } *list_zapamietane_funkcje;
 
-int ile_funkcji = 0;
-int ile_fun_def = 0;
-int ile_fun_proto = 0;
-int ile_fun_call = 0;
+int ile_funkcji;
+int ile_fun_def;
+int ile_fun_proto;
+int ile_fun_call;
 void add_zapamietane_funkcje(char *funame);
 void idz_pocz_listy(list_zapamietane_funkcje lista);
 

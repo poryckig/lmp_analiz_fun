@@ -17,6 +17,7 @@ int main(int argc, char **argv){
     
     int i, j, k, l;
     int ile_funkcji, ile_fun_def, ile_fun_proto, ile_fun_call;
+    int licznik = 0;
     
 
     for(i=1; i<argc; i++){
@@ -24,6 +25,7 @@ int main(int argc, char **argv){
         lista_fun_def list_fun_def = malloc(1 * sizeof(*list_fun_def));
         lista_fun_proto list_fun_proto = malloc(1 * sizeof(*list_fun_proto));
         lista_fun_call list_fun_call = malloc(1 * sizeof(*list_fun_call));
+        ile_funkcji = 0;
         ile_fun_def = 0;
         ile_fun_proto = 0;
         ile_fun_call = 0;
@@ -46,39 +48,84 @@ int main(int argc, char **argv){
                     for(l=0; l<ile_linii_fun_proto; l++){                           //jest prototypem
                         printf("plik %s od linia %d do linia %d\n", argv[i], list_fun_proto->linie_fun_proto[l], list_fun_proto->linie_fun_proto[l]);
                     }
-                    list_fun_proto = list_fun_proto->next;
+                    licznik++;
+                    if(k+1 < ile_fun_proto){
+                        list_fun_proto = list_fun_proto->next;
+                        continue;
+                    }
+                    else
+                        break;  
                 }
                 else {
-                    list_fun_proto = list_fun_proto->next;   //przechodzimy do nastepnego prototypu i bedziemy
-                    continue;                                   //sprawdzac, czy ta funkcje nie jest moze nastepnym
-                }                                                   //prototypem
+                    if(k+1 <ile_fun_proto){
+                        list_fun_proto = list_fun_proto->next;   //przechodzimy do nastepnego prototypu i bedziemy
+                        continue;                                   //sprawdzac, czy ta funkcje nie jest moze nastepnym
+                    }                                               //prototypem
+                    else
+                        break;
+                }                                               
             }
+            idz_pocz_listy_proto(list_fun_proto);
+            if(licznik == 0){      //<-- to znaczy, ze ta funkcja nie jest zadnym prototypem                             
+                printf("brak\n");
+                goto etyk_def;
+            }                                               
+    
 
             etyk_def:
+            licznik = 0;
             printf("\tDefinicja:\n");
     
             
 
 
             etyk_uzycie:
+            licznik = 0;
             printf("\tUzycie:\n");
+
+            if(j+1 < ile_funkcji){
+                list_fun = list_fun->next;
+                continue;
+            }
+            else
+                break;
 	    }
 
 
-        //***ZWALNIANIE PAMIECI DLA LIST W TYm PLIKU***//
+        //***ZWALNIANIE PAMIECI DLA LIST W TYM PLIKU***//
+        free(list_fun->nazwa);
         while(list_fun->prev != NULL){
-            free(list_fun->nazwa);
             list_fun = list_fun->prev;
+            free(list_fun->nazwa);
         }
         free(list_fun);
-
         
-        free(list_fun_def);
+        free(list_fun_proto->name_fun_proto);
+        while(list_fun_proto->next != NULL){
+            list_fun_proto = list_fun_proto->next;
+            free(list_fun_proto->name_fun_proto);
+        }
+        //zwolnic dla linii
         free(list_fun_proto);
+
+        free(list_fun_def->name_fun_def);
+        while(list_fun_def->next != NULL){
+            list_fun_def = list_fun_def->next;
+            free(list_fun_def->name_fun_def);
+        }
+        //zwolnic dla linii
+        free(list_fun_def);
+
+        free(list_fun_call->name_fun_call);
+        while(list_fun_call->next != NULL){
+            list_fun_call = list_fun_call->next;
+            free(list_fun_call->name_fun_call);
+        }
+        //zwolnic dla linii
         free(list_fun_call);
     }
     
-
     return 0;
-
 }
+
+

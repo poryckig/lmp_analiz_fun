@@ -6,7 +6,7 @@
 #include "store.h"
 
 
-void store_add_def(char *funame, int par_level, FILE *file){
+void store_add_def(char *funame, int par_level){
     if(list_fun_def == NULL){
         list_fun_def->name_fun_def = malloc((strlen(funame) + 1) * sizeof(*list_fun_def->name_fun_def));
         strcpy(list_fun_def->name_fun_def, funame);
@@ -27,7 +27,7 @@ void store_add_def(char *funame, int par_level, FILE *file){
 }
 
 
-void store_add_proto(char *funame, int par_level, FILE *file){
+void store_add_proto(char *funame, int par_level){
     if(list_fun_proto == NULL){
         list_fun_proto->name_fun_proto = malloc((strlen(funame) + 1) * sizeof(*list_fun_proto->name_fun_proto));
         strcpy(list_fun_proto->name_fun_proto, funame);
@@ -48,7 +48,7 @@ void store_add_proto(char *funame, int par_level, FILE *file){
 }
 
 
-void store_add_call(char *funame, int par_level, FILE *file){
+void store_add_call(char *funame, int par_level){
     if(list_fun_call == NULL){
         list_fun_call->name_fun_call = malloc((strlen(funame) + 1) * sizeof(*list_fun_call->name_fun_call));
         strcpy(list_fun_call->name_fun_call, funame);
