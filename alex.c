@@ -65,9 +65,9 @@ lexem_t alex_nextLexem( void ) {
                     return COMMENT;
                 }
             }
-            if((c = fgets(in)) == '*') {      //komentarz wielolinijkowy
+            if((c = fgetc(in)) == '*') {      //komentarz wielolinijkowy
                 etykieta1:
-                while((c = fgets(in)) != EOF && c ! '*'){
+                while((c = fgetc(in)) != EOF && c ! '*'){
                     if(c == '\n'){
                         ln++;
                         continue;
@@ -76,9 +76,9 @@ lexem_t alex_nextLexem( void ) {
                         continue;
                 }
                 if(c == '*'){
-                    if((c = fgets(in)) == '/')
+                    if((c = fgetc(in)) == '/')
                         return COMMENT;
-                    else if((c = fgets(in)) == '\n'){
+                    else if((c = fgetc(in)) == '\n'){
                         ln++;
                         goto etykieta1;
                     }

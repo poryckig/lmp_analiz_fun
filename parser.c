@@ -15,8 +15,11 @@ void analizatorSkladni (char *inpname, list_zapamietane_funkcje lista, lista_fun
     int nbra = 0;   // bilans nawiasów klamrowych {}
     int npar = 0;   // bilans nawiasów zwykłych ()
     int ile_funkcji = 0;
+    int tmp_koniec_def;
 
+    stack_init(sterta);
     alex_init4file (in);          // ustaw analizator leksykalny, aby czytał in
+    
 
     lexem_t lex;
 
@@ -66,6 +69,8 @@ void analizatorSkladni (char *inpname, list_zapamietane_funkcje lista, lista_fun
                 break;
             }
             case CLOBRA:{
+           	tmp_koniec_def = alex_getLN();
+		lista2->linie_koncowe[lista2->ile_linii - 1] = tmp_koniec_def;
                 nbra--;
                 break;
             }

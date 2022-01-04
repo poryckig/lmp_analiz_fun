@@ -45,7 +45,7 @@ int main(int argc, char **argv){
             }
             for(k=0; k<ile_fun_proto; k++){   //w tym pliku sa jakies prototypy, iterujemy po kazdym prototypie
                 if(strcmp(list_fun->nazwa, list_fun_proto->name_fun_proto) == 0){   //sprawdzamy, czy akurat ta funkcja
-                    for(l=0; l<ile_linii_fun_proto; l++){                           //jest prototypem
+                    for(l=0; l<list_fun_proto->ile_linii; l++){                           //jest prototypem
                         printf("plik %s od linia %d do linia %d\n", argv[i], list_fun_proto->linie_fun_proto[l], list_fun_proto->linie_fun_proto[l]);
                     }
                     licznik++;
@@ -75,14 +75,77 @@ int main(int argc, char **argv){
             etyk_def:
             licznik = 0;
             printf("\tDefinicja:\n");
-    
-            
+             
+            if(list_fun_def == NULL){
+                printf("brak\n");       //<-- ta funkcja nie jest prototypem w tym pliku
+                goto etyk_uzycie;           //<-- idziemy teraz do wypisywania dla tej funkcji definicji
+            }
+            for(k=0; k<ile_fun_def; k++){   //w tym pliku sa jakies prototypy, iterujemy po kazdym prototypie
+                if(strcmp(list_fun->nazwa, list_fun_def->name_fun_def) == 0){   //sprawdzamy, czy akurat ta funkcja
+                    for(l=0; l<list_fun_def->ile_linii; l++){                           //jest prototypem
+                        printf("plik %s od linia %d do linia %d\n", argv[i], list_fun_def->linie_fun_deff[l], list_fun_deff->linie_koncowe[l]);
+                    }
+                    licznik++;
+                    if(k+1 < ile_fun_def){
+                        list_fun_def = list_fun_def->next;
+                        continue;
+                    }
+                    else
+                        break;  
+                }
+                else {
+                    if(k+1 < ile_fun_def){
+                        list_fun_def = list_fun_def->next;   //przechodzimy do nastepnego prototypu i bedziemy
+                        continue;                                   //sprawdzac, czy ta funkcje nie jest moze nastepnym
+                    }                                               //prototypem
+                    else
+                        break;
+                }                                               
+            }
+            idz_pocz_listy_def(list_fun_def);
+            if(licznik == 0){      //<-- to znaczy, ze ta funkcja nie jest zadnym prototypem                             
+                printf("brak\n");
+                goto etyk_uzycie;
+            }   
 
 
             etyk_uzycie:
             licznik = 0;
             printf("\tUzycie:\n");
+            if(list_fun_call == NULL){
+                printf("brak\n");       //<-- ta funkcja nie jest prototypem w tym pliku
+                goto etyk_finish;           //<-- idziemy teraz do wypisywania dla tej funkcji definicji
+            }
+            for(k=0; k<ile_fun_call; k++){   //w tym pliku sa jakies prototypy, iterujemy po kazdym prototypie
+                if(strcmp(list_fun->nazwa, list_fun_call->name_fun_call) == 0){   //sprawdzamy, czy akurat ta funkcja
+                    for(l=0; l<list_fun_call->ile_linii; l++){                           //jest prototypem
+                        printf("plik %s od linia %d do linia %d\n", argv[i], list_fun_call->linie_fun_call[l], list_fun_call->linie_fun_call[l]);
+                    }
+                    licznik++;
+                    if(k+1 < ile_fun_call){
+                        list_fun_call = list_fun_call->next;
+                        continue;
+                    }
+                    else
+                        break;  
+                }
+                else {
+                    if(k+1 < ile_fun_call){
+                        list_fun_call = list_fun_call->next;   //przechodzimy do nastepnego prototypu i bedziemy
+                        continue;                                   //sprawdzac, czy ta funkcje nie jest moze nastepnym
+                    }                                               //prototypem
+                    else
+                        break;
+                }                                               
+            }
+            idz_pocz_listy_call(list_fun_call);
+            if(licznik == 0){      //<-- to znaczy, ze ta funkcja nie jest zadnym prototypem                             
+                printf("brak\n");
+                goto etyk_finish;
+            }     
 
+
+            etyk_finish:
             if(j+1 < ile_funkcji){
                 list_fun = list_fun->next;
                 continue;
@@ -100,13 +163,20 @@ int main(int argc, char **argv){
         }
         free(list_fun);
         
+
         free(list_fun_proto->name_fun_proto);
+        for(j=0; j<list_fun_proto->ile_linii; j++)
+            free(list_fun_proto->linie_fun_proto[j]);
         while(list_fun_proto->next != NULL){
             list_fun_proto = list_fun_proto->next;
             free(list_fun_proto->name_fun_proto);
+            for(j=1; j<list_fun_proto->ile_linii; j++)
+                free(list_fun_proto->linie_fun_proto[j]);
         }
-        //zwolnic dla linii
+        idz_pocz_listy_proto(list_fun_proto);
         free(list_fun_proto);
+
+    
 
         free(list_fun_def->name_fun_def);
         while(list_fun_def->next != NULL){
@@ -114,14 +184,21 @@ int main(int argc, char **argv){
             free(list_fun_def->name_fun_def);
         }
         //zwolnic dla linii
+        idz_pocz_listy_def(list_fun_def);
         free(list_fun_def);
 
+    
+   
         free(list_fun_call->name_fun_call);
+        for(j=0; j<list_fun_call->ile_linii; j++)
+            free(list_fun_call->linie_fun_call[j]);
         while(list_fun_call->next != NULL){
             list_fun_call = list_fun_call->next;
             free(list_fun_call->name_fun_call);
+            for(j=1; j<list_fun_call ->ile_linii; j++)
+                free(list_fun_call->linie_fun_call[j]);
         }
-        //zwolnic dla linii
+        idz_pocz_listy_call(list_fun_call);
         free(list_fun_call);
     }
     
